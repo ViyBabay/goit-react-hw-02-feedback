@@ -16,13 +16,11 @@ export class Statistics extends Component {
   }
 
   handleNeutral= () => {
-    this.setState((prevState) => ({neutral: prevState.neutral +1}))
-    console.log(this.state.neutral);
+    this.setState((prevState) => ({neutral: prevState.neutral +1}), () => console.log(this.state.neutral))
   }
 
   handleBad= () => {
-    this.setState((prevState) => ({bad: prevState.bad +1}))
-    console.log(this.state.bad);
+    this.setState((prevState) => ({bad: prevState.bad +1}), () => console.log(this.state.bad))
   }
 
     render() {
