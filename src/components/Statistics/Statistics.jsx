@@ -12,20 +12,39 @@ export class Statistics extends Component {
   };
 
   handleGood = () => {
-    this.setState((prevState) => ({good: prevState.good +1}), () => console.log(this.state.good))
-  }
+    this.setState(
+      prevState => ({ good: prevState.good + 1 }),
+      () => console.log(this.state.good)
+    );
+  };
 
-  handleNeutral= () => {
-    this.setState((prevState) => ({neutral: prevState.neutral +1}), () => console.log(this.state.neutral))
-  }
+  handleNeutral = () => {
+    this.setState(
+      prevState => ({ neutral: prevState.neutral + 1 }),
+      () => console.log(this.state.neutral)
+    );
+  };
 
-  handleBad= () => {
-    this.setState((prevState) => ({bad: prevState.bad +1}), () => console.log(this.state.bad))
-  }
+  handleBad = () => {
+    this.setState(
+      prevState => ({ bad: prevState.bad + 1 }),
+      () => console.log(this.state.bad)
+    );
+  };
 
-    render() {
-      const { good, neutral, bad } = this.state;
-      return (
+  countTotalFeedback = () => {
+    return this.state.good + this.state.neutral + this.state.bad;
+  };
+
+  countPositiveFeedbackPercentage = () => {
+    return ((this.state.good / this.countTotalFeedback()) * 100).toFixed();
+  };
+
+  render() {
+    const { good, neutral, bad } = this.state;
+    const total = this.countTotalFeedback();
+    const positive = this.countPositiveFeedbackPercentage();
+    return (
       <div>
         <h2 className="title">Please leave feedback</h2>
         <ul className="btn-list">
@@ -42,15 +61,20 @@ export class Statistics extends Component {
           <li className="btn-item">
             <button type="button" className="btn" onClick={this.handleBad}>
               Bad
-            </button> 
+            </button>
           </li>
         </ul>
-        <h3 className="stat-tittle">Statistics</h3>
-        <ul className="stat-list">
-          <li className="stat-item">Good :{good}</li>
-          <li className="stat-item">Neutral :{neutral}</li>
-          <li className="stat-item">Bad :{bad}</li>
-        </ul>
+        {total > 0 ? (
+          <ul>
+            <li className="stat-item">Good: {good}</li>
+            <li className="stat-item">Neutral: {neutral}</li>
+            <li className="stat-item">Bad: {bad}</li>
+            <li className="stat-item">Total: {total}</li>
+            <li className="stat-item">Positive feedback: {positive} %</li>
+          </ul>
+        ) : (
+          <h3>There is no feedback</h3>
+        )}
       </div>
     );
   }
